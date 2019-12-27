@@ -3,6 +3,7 @@ package org.shoonya.datatype.model
 import cats.syntax.either._
 import doobie.util.meta.Meta
 import io.circe.Json
+import io.circe.generic.extras.{Configuration, ConfiguredJsonCodec}
 import io.circe.generic.semiauto._
 import io.circe.jawn.parse
 import org.postgresql.util.PGobject
@@ -65,4 +66,15 @@ case class Entity(fields: Seq[Field], primaryKey: PrimaryKey, uniqueKey: Seq[Uni
 object Entity {
   implicit val entityEncoder = deriveEncoder[Entity]
   implicit val entityDecoder = deriveDecoder[Entity]
+}
+
+@ConfiguredJsonCodec
+case class Entity1(name: String)
+
+object Entity1 {
+
+  /**
+    * This is an implicit configuration used for deserializing github contributor json to [[Entity1]]
+    */
+  implicit val customConfig: Configuration = Configuration.default.withSnakeCaseMemberNames
 }

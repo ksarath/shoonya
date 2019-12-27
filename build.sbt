@@ -10,6 +10,7 @@ val circeV        = "0.12.2"
 val doobieV       = "0.8.8"
 val flywayV       = "6.1.3"
 val h2V           = "1.4.200"
+val postgresV     = "42.2.9"
 
 val baseDeps = Seq(
   "co.fs2"                          %% "fs2-core"                               % fs2V,
@@ -28,7 +29,8 @@ val baseDeps = Seq(
   "io.circe"                        %% "circe-generic"                          % circeV,
   "io.circe"                        %% "circe-literal"                          % circeV,
   "io.circe"                        %% "circe-generic-extras"                   % circeV,
-  "com.h2database"                  % "h2"                                      % h2V,
+  "org.postgresql"                  %  "postgresql"                             % postgresV,
+  "com.h2database"                  %  "h2"                                     % h2V,
   "org.slf4j"                       % "slf4j-log4j12"                           % "1.7.26",
   "com.github.pureconfig"           %% "pureconfig"                             % "0.12.1",
   "com.lihaoyi"                     %% "sourcecode"                             % "0.1.7",
