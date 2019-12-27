@@ -1,0 +1,13 @@
+project/zecret
+project/travis-deploy-key
+project/secrets.tar.xz
+project/project
+project/target
+target
+test-output/
+.sbtopts
+project/.sbt
+test-output/
+.bloop
+.metals
+.idea
