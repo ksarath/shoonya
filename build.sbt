@@ -4,6 +4,7 @@ import sbt.Keys._
 val shoonyaVersion    = "0.0.1-SNAPSHOT"
 val SilencerVersion = "1.4.4"
 
+val zioV          = "1.0.0-RC17"
 val fs2V          = "2.1.0"
 val http4sV       = "0.21.0-M6"
 val circeV        = "0.12.2"
@@ -13,6 +14,7 @@ val h2V           = "1.4.200"
 val postgresV     = "42.2.9"
 
 val baseDeps = Seq(
+  "dev.zio"                         %% "zio"                                    % zioV,
   "co.fs2"                          %% "fs2-core"                               % fs2V,
   "co.fs2"                          %% "fs2-io"                                 % fs2V,
   "co.fs2"                          %% "fs2-reactive-streams"                   % fs2V,

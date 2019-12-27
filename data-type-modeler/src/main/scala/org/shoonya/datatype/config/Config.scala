@@ -16,7 +16,6 @@ case class Config(server: ServerConfig, database: DatabaseConfig)
   * Utilities for the application configuration
   */
 object Config {
-  type MonadicError[F[_]] = MonadError[F, Throwable]
 
   /**
     * implicit converter for loading root Config using pureconfig
@@ -26,11 +25,8 @@ object Config {
   /**
     * Loads the application configuration
     * @param file application configuration file path, by default application.conf
-    * @return application configuratio
+    * @return application configuration
     */
-  def load[F[_]: Monad : MonadicError](file: String = "application.conf"): F[Config] =
-    ConfigSource.file(file).load[Config] match {
-      case Left(e) => implicitly[MonadicError[F]].raiseError[Config](new ConfigReaderException[Config](e))
-      case Right(config) => implicitly[Monad[F]].pure(config)
-    }
+  def load(file: String = "application.conf"): ConfigReader.Result[Config] =
+    ConfigSource.file(file).load[Config]
 }

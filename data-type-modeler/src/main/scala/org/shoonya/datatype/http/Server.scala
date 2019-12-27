@@ -6,16 +6,21 @@ import fs2.Stream
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.syntax.kleisli._
-import shoonya.config.Config
-import shoonya.db.Database
-import shoonya.service._
+import org.shoonya.datatype.config.Config
+import zio.{App, ZEnvDefinition, ZIO}
 
 import scala.concurrent.duration._
 
 /**
   * The main http server application
   */
-object Server extends IOApp {
+object Server extends App with ZEnvDefinition {
+
+  override def run(args: List[String]): ZIO[ZEnv, Nothing, Int] = {
+    ZIO.effectTotal(for {
+      config <- ZIO.fromEither(Config.load())
+    } yield 0))
+  }
 
 //  override def run(args: List[String]): IO[ExitCode] =
 //    (for {
