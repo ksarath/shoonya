@@ -115,7 +115,8 @@ lazy val dataTypeModeler = (project in file("data-type-modeler"))
     name := "data-type-modeler",
     scalaVersion := "2.13.1",
     scalacOptions := _scalacOptions,
-    libraryDependencies ++= baseDeps ++ _compilerPlugins
+    libraryDependencies ++= baseDeps ++ _compilerPlugins,
+    fork in (run) := true
   )
 
 lazy val docs = project
