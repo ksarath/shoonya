@@ -617,3 +617,219 @@ http://learnyouahaskell.com/making-our-own-types-and-typeclasses#kinds-and-some-
 https://www.youtube.com/watch?v=onQSHiafAY8 - ZIO Schedule
 
 https://github.com/Chymyst/curryhoward
+
+https://www.linkedin.com/groups/12166023/
+
+https://leanpub.com/fpmortals
+
+https://typelevel.org/blog/2016/08/21/hkts-moving-forward.html
+
+https://medium.com/bigpanda-engineering/understanding-f-in-scala-4bec5996761f
+
+https://speakerdeck.com/chrisphelps/testing-for-lawful-good-adventurers?slide=9
+
+https://docs.scala-lang.org/tour/upper-type-bounds.html
+
+https://www.youtube.com/watch?v=JZPXzJ5tp9w
+
+https://www.google.com/search?q=scala+newtypes&oq=scala+newtypes
+
+https://www.youtube.com/watch?v=I8LbkfSSR58&list=PLbgaMIhjbmEnaH_LTkxLI7FMa2HsnawM_
+
+https://github.com/data61/fp-course
+
+https://alvinalexander.com/scala/functional-programming-simplified-book
+
+https://www.scala-exercises.org/fp_in_scala/getting_started_with_functional_programming
+
+https://typelevel.org/cats/nomenclature.html
+
+http://blog.ezyang.com/2012/08/applicative-functors/
+
+http://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html
+
+https://www.linkedin.com/groups/12166023/
+
+https://www.linkedin.com/in/salarrahmanian/
+
+```scala
+def crawlIOPar[E: Monoid, A: Monoid](
+    seeds     : Set[URL],
+    router    : URL => Set[URL],
+    processor : (URL, String) => IO[E, A]): IO[Nothing, (Fiber[Nothing, Unit], Ref[(Crawl[E, A], Set[URL])])] =  {
+
+      def start(n: Int, queue: Queue[URL], ref: Ref[(Crawl[E, A], Set[URL])]): IO[Nothing, Fiber[Nothing, Unit]] =
+        IO.forkAll(List.fill(n)(queue.take.flatMap(url =>
+          getURL(url).redeem(
+            _    => IO.unit,
+            html => processor(url, html).redeemPure(Crawl(_, mzero[A]), Crawl(mzero[E], _)).flatMap { crawl1 =>
+              val urls = extractURLs(url, html).toSet.flatMap(router)
+
+              ref.modify {
+                case (crawl0, visited) =>
+                  (visited, (crawl0 |+| crawl1, visited ++ urls))
+              }.flatMap(old => IO.traverse(urls -- old)(queue.offer(_)).void)
+            }
+          )
+        ).forever)).map(_.map(_ => ()))
+
+      for {
+        ref   <- Ref(mzero[Crawl[E, A]] -> seeds)
+        queue <- Queue.bounded[URL](1000)
+        _     <- IO.sequence(seeds.toList.map(queue.offer))
+        fiber <- start(10, queue, ref)
+      } yield (fiber, ref)
+    }
+```
+
+https://www.youtube.com/watch?v=y_QHSDOVJM8
+
+https://github.com/atnos-org/eff
+
+https://www.manning.com/books/type-driven-development-with-idris
+
+https://livebook.manning.com/book/type-driven-development-with-idris/about-this-book/
+
+https://gist.github.com/jdegoes/7d20ed233dfefba70b9da546679e42fc
+
+https://github.com/asweigart/my_first_tic_tac_toe/blob/master/tictactoe.py
+
+http://blog.higher-order.com/assets/fpiscompanion.pdf
+
+https://github.com/slamdata/quasar
+
+FS2, Doobie, ZIO, Scalaz, cats, http4s
+
+https://github.com/scalaz/introduction-to-fp-in-scala
+
+https://github.com/ambiata/introduction-to-fp-in-scala
+
+https://gist.github.com/jdegoes/97459c0045f373f4eaf126998d8f65dc
+
+https://github.com/ovotech/algae#logging
+
+https://arxiv.org/abs/1703.10857
+
+https://github.com/typelevel/cats/blob/master/core/src/main/scala/cats/arrow/Profunctor.scala
+
+https://github.com/scalaz/scalaz/blob/series/7.3.x/core/src/main/scala/scalaz/Profunctor.scala
+
+https://github.com/scalaz/testz
+
+https://github.com/jdegoes/zio-workshop
+
+https://github.com/vivri/Adjective
+
+https://github.com/scalaz/scalaz-zio/blob/master/core/jvm/src/main/scala/scalaz/zio/DefaultRuntime.scala
+
+https://www.reddit.com/r/haskell/comments/36e45c/mtl_is_not_a_monad_transformer_library/
+
+https://www.slideshare.net/jdegoes/orthogonal-functional-architecture
+
+https://www.youtube.com/watch?v=K8OKLorIpZc
+
+https://scalaz.github.io/scalaz/scalaz-2.9.1-6.0.4/doc.sxr/scalaz/Applicative.scala.html
+
+https://typelevel.org/cats/typeclasses/applicative.html
+
+https://underscore.io/books/scala-with-cats/
+
+https://leanpub.com/fpmortals
+
+https://github.com/elbaulp/Scala-Category-Theory
+
+eed3si9n.com/learning-scalaz/
+
+hmemcpy/milewski-ctfp-pdf
+
+https://camo.githubusercontent.com/b4caa27f5df29a8b2c29b1a543ccc4599eb2dae4/68747470733a2f2f63646e2e7261776769742e636f6d2f74706f6c656361742f636174732d696e666f677261706869632f6d61737465722f636174732e7376673f63616368654275737465723d33
+
+http://degoes.net/articles/fp-glossary
+
+https://github.com/softwaremill/sttp
+
+https://github.com/softwaremill/tapir
+
+https://tapir-scala.readthedocs.io/en/latest/index.html
+
+https://github.com/mkotsur/playground-cats-effect/pull/1/files
+
+https://twitter.com/jdegoes/status/1106981861127942144?s=21
+
+https://github.com/pauljamescleary/scala-pet-store/
+
+https://www.innoq.com/en/blog/functional-service-in-scala/
+
+https://tapir-scala.readthedocs.io/en/latest/
+
+https://github.com/mschuwalow/zio-todo-backend
+
+http://degoes.net/articles/testable-zio
+
+https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor.html#v:-36--62-
+
+https://www.youtube.com/watch?v=mkSHhsJXjdc&t=4s
+
+https://github.com/scala-js/scala-js/blob/master/javalanglib/src/main/scala/java/lang/Thread.scala
+
+https://gist.github.com/jdegoes/f3224d96a1f371086b5d240b5c2d5b7a
+
+https://gist.github.com/jdegoes/2f20defd4fe07ff8e2476e92312ba317
+
+https://zio.dev/docs/ecosystem/ecosystem
+
+https://github.com/zio/zio-kafka
+
+https://github.com/scalaz/scalaz-schema/blob/prototyping/modules/core/src/main/scala/SchemaModule.scala 
+
+https://medium.com/@olxc/the-evolution-of-a-scala-programmer-1b7a709fb71f
+
+http://michalostruszka.pl/blog/2015/03/30/scala-case-classes-to-and-from-tuples/
+
+https://gist.github.com/milessabin/fbd9da3361611b91da17
+
+https://www.youtube.com/watch?v=IcgmSRJHu_8
+
+https://github.com/debasishg/frdomain/blob/master/src/main/scala/frdomain/ch6/domain/service/AccountService.scala
+
+http://eed3si9n.com/console-games-in-scala
+
+https://zio.dev/docs/resources/resources
+
+https://github.com/ghostdogpr/zio-cheatsheet
+
+https://t.co/zp1DU0kyn1
+
+https://github.com/r2dbc
+
+https://github.com/zio/zio-kafka/
+
+https://github.com/tabdulradi/zio-instrumentation/
+
+https://medium.com/@wiemzin/zio-with-http4s-and-doobie-952fba51d089
+
+https://gist.github.com/jdegoes/a799c7365d877da1face69dd139466de
+
+https://gist.github.com/jdegoes/a799c7365d877da1face69dd139466de
+
+http://hackage.haskell.org/package/DSTM
+
+## ZIO Fibers
+
+1. Fine-Grained Interruption: You have easy control over the interruptibility status of different regions.
+2. Effect Locking: You can lock effects on different thread pools. Unlike Cats IO, ZIO#lock actually respects the thread pool invariant.
+3. Lossless Errors. ZIO never loses parallel errors or sequential errors.
+4. Execution Traces. ZIO has detailed execution traces showing the steps to a failure and what would have happened without the failure.
+5. Fiber Dumps. ZIO can tell you all fibers running in the system, what their status is, and what other fibers they are blocking on.
+6. STM. ZIO has software transactional memory that provides composable, interruptible, asynchronous data structures.
+7. Increased Polymorphism: All data types in ZIO are polymorphic, which provides strong compile-time guarantees of effect handling.
+8. Baked In Typed Error & Reader Effects: These effects have to be added to Cats IO & Monix using EitherT / ErrorT and ReaderT (Kleisli) manually.
+9. Guaranteed Finalizers: ZIO guarantees finalizers will run, so long as the effects they are attached to exit (for some reason), while Cats IO and Monix do not make this guarantee.
+10. Inherited Monadic Region Status: Forked fibers inherit the settings of parent fibers, while in Cats IO and Monix, they are reset to global defaults.
+
+
+https://github.com/evolution-gaming/scache
+
+https://github.com/evolution-gaming/scache/blob/master/src/main/scala/com/evolutiongaming/scache/ExpiringCache.scala
+
+http://conal.net/blog/posts/the-c-language-is-purely-functional
