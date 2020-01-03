@@ -833,3 +833,10 @@ https://github.com/evolution-gaming/scache
 https://github.com/evolution-gaming/scache/blob/master/src/main/scala/com/evolutiongaming/scache/ExpiringCache.scala
 
 http://conal.net/blog/posts/the-c-language-is-purely-functional
+
+
+https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/
+
+http://www.tomharding.me/fantasy-land/
+
+https://github.com/fantasyland/fantasy-land
